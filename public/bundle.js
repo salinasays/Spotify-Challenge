@@ -62,15 +62,15 @@
 	
 	var _directory2 = _interopRequireDefault(_directory);
 	
-	var _home = __webpack_require__(245);
+	var _home = __webpack_require__(237);
 	
 	var _home2 = _interopRequireDefault(_home);
 	
-	var _profile = __webpack_require__(246);
+	var _profile = __webpack_require__(236);
 	
 	var _profile2 = _interopRequireDefault(_profile);
 	
-	__webpack_require__(236);
+	__webpack_require__(238);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -26608,7 +26608,7 @@
 	
 	var _addPerson2 = _interopRequireDefault(_addPerson);
 	
-	var _profile = __webpack_require__(246);
+	var _profile = __webpack_require__(236);
 	
 	var _profile2 = _interopRequireDefault(_profile);
 	
@@ -37050,13 +37050,181 @@
 /* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _jquery = __webpack_require__(234);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
+	var _reactRouter = __webpack_require__(178);
+	
+	var _reactRouter2 = _interopRequireDefault(_reactRouter);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Profile = _react2.default.createClass({
+		displayName: 'Profile',
+	
+		getInitialState: function getInitialState() {
+			return { profile: null, PeopleId: this.props.params.id, name: '', favoriteCity: '' };
+		},
+		componentDidMount: function componentDidMount() {
+			var _this = this;
+	
+			_jquery2.default.ajax({
+				url: '/api/people/' + this.props.params.id,
+				method: 'GET'
+			}).done(function (profile) {
+				console.log(profile);
+				_this.setState({ profile: profile, name: profile.name, favoriteCity: profile.favoriteCity });
+			});
+		},
+		modifyCity: function modifyCity() {
+			var _this2 = this;
+	
+			_jquery2.default.ajax({
+				url: '/api/people/' + this.props.params.id,
+				method: 'PUT'
+			}).done(function (profile) {
+				console.log('updated profile', profile);
+				_this2.setState({ profile: profile });
+				_reactRouter2.default.push('/people/' + _this2.props.params.id);
+			});
+		},
+	
+		deleteProfile: function deleteProfile() {
+			_jquery2.default.ajax({
+				url: '/api/people/' + this.props.params.id,
+				method: 'DELETE'
+			});
+			console.log('deleted');
+			_reactRouter2.default.push('/people');
+		},
+	
+		render: function render() {
+			return _react2.default.createElement(
+				'div',
+				null,
+				_react2.default.createElement(
+					'h3',
+					null,
+					'Profile Page'
+				),
+				_react2.default.createElement(
+					'h1',
+					null,
+					this.state.name
+				),
+				_react2.default.createElement(
+					'h1',
+					null,
+					this.state.favoriteCity
+				),
+				_react2.default.createElement(
+					'button',
+					{ onClick: this.modifyCity },
+					'Brooklynify'
+				),
+				_react2.default.createElement(
+					'button',
+					{ onClick: this.deleteProfile },
+					'Delete'
+				)
+			);
+		}
+	});
+	
+	exports.default = Profile;
+
+/***/ },
+/* 237 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(178);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Home = _react2.default.createClass({
+		displayName: 'Home',
+	
+		seeProfiles: function seeProfiles() {
+			_reactRouter.browserHistory.push('/people');
+		},
+		render: function render() {
+			return _react2.default.createElement(
+				'div',
+				{ className: 'homeDiv' },
+				_react2.default.createElement('img', { src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Spotify_logo_with_text.svg/500px-Spotify_logo_with_text.svg.png' }),
+				_react2.default.createElement(
+					'h3',
+					null,
+					'Spotify Fellowship Code Challenge'
+				),
+				_react2.default.createElement(
+					'details',
+					null,
+					_react2.default.createElement(
+						'summary',
+						null,
+						'Salina Fu'
+					),
+					_react2.default.createElement(
+						'p',
+						null,
+						'Contact: sfu.concepts@gmail.com'
+					),
+					_react2.default.createElement(
+						'a',
+						{ href: 'http://linkedin.com/in/salinafu', target: '_blank' },
+						_react2.default.createElement(
+							'p',
+							null,
+							'LinkedIn'
+						)
+					)
+				),
+				_react2.default.createElement('br', null),
+				_react2.default.createElement('br', null),
+				_react2.default.createElement(
+					'button',
+					{ className: 'btn', onClick: this.seeProfiles },
+					' Profiles'
+				)
+			);
+		}
+	});
+	
+	exports.default = Home;
+
+/***/ },
+/* 238 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(237);
+	var content = __webpack_require__(239);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(243)(content, {});
+	var update = __webpack_require__(245)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -37073,10 +37241,10 @@
 	}
 
 /***/ },
-/* 237 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(238)(undefined);
+	exports = module.exports = __webpack_require__(240)(undefined);
 	// imports
 	
 	
@@ -37087,7 +37255,7 @@
 
 
 /***/ },
-/* 238 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {/*
@@ -37166,10 +37334,10 @@
 	  return '/*# ' + data + ' */';
 	}
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(239).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(241).Buffer))
 
 /***/ },
-/* 239 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -37182,9 +37350,9 @@
 	
 	'use strict'
 	
-	var base64 = __webpack_require__(240)
-	var ieee754 = __webpack_require__(241)
-	var isArray = __webpack_require__(242)
+	var base64 = __webpack_require__(242)
+	var ieee754 = __webpack_require__(243)
+	var isArray = __webpack_require__(244)
 	
 	exports.Buffer = Buffer
 	exports.SlowBuffer = SlowBuffer
@@ -38965,7 +39133,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 240 */
+/* 242 */
 /***/ function(module, exports) {
 
 	'use strict'
@@ -39085,7 +39253,7 @@
 
 
 /***/ },
-/* 241 */
+/* 243 */
 /***/ function(module, exports) {
 
 	exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -39175,7 +39343,7 @@
 
 
 /***/ },
-/* 242 */
+/* 244 */
 /***/ function(module, exports) {
 
 	var toString = {}.toString;
@@ -39186,7 +39354,7 @@
 
 
 /***/ },
-/* 243 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -39218,7 +39386,7 @@
 		singletonElement = null,
 		singletonCounter = 0,
 		styleElementsInsertedAtTop = [],
-		fixUrls = __webpack_require__(244);
+		fixUrls = __webpack_require__(246);
 	
 	module.exports = function(list, options) {
 		if(false) {
@@ -39477,7 +39645,7 @@
 
 
 /***/ },
-/* 244 */
+/* 246 */
 /***/ function(module, exports) {
 
 	
@@ -39570,174 +39738,6 @@
 		return fixedCss;
 	};
 
-
-/***/ },
-/* 245 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRouter = __webpack_require__(178);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var Home = _react2.default.createClass({
-		displayName: 'Home',
-	
-		seeProfiles: function seeProfiles() {
-			_reactRouter.browserHistory.push('/people');
-		},
-		render: function render() {
-			return _react2.default.createElement(
-				'div',
-				{ className: 'homeDiv' },
-				_react2.default.createElement('img', { src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Spotify_logo_with_text.svg/500px-Spotify_logo_with_text.svg.png' }),
-				_react2.default.createElement(
-					'h3',
-					null,
-					'Spotify Fellowship Code Challenge'
-				),
-				_react2.default.createElement(
-					'details',
-					null,
-					_react2.default.createElement(
-						'summary',
-						null,
-						'Salina Fu'
-					),
-					_react2.default.createElement(
-						'p',
-						null,
-						'Contact: sfu.concepts@gmail.com'
-					),
-					_react2.default.createElement(
-						'a',
-						{ href: 'http://linkedin.com/in/salinafu', target: '_blank' },
-						_react2.default.createElement(
-							'p',
-							null,
-							'LinkedIn'
-						)
-					)
-				),
-				_react2.default.createElement('br', null),
-				_react2.default.createElement('br', null),
-				_react2.default.createElement(
-					'button',
-					{ className: 'btn', onClick: this.seeProfiles },
-					' Profiles'
-				)
-			);
-		}
-	});
-	
-	exports.default = Home;
-
-/***/ },
-/* 246 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _jquery = __webpack_require__(234);
-	
-	var _jquery2 = _interopRequireDefault(_jquery);
-	
-	var _reactRouter = __webpack_require__(178);
-	
-	var _reactRouter2 = _interopRequireDefault(_reactRouter);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var Profile = _react2.default.createClass({
-		displayName: 'Profile',
-	
-		getInitialState: function getInitialState() {
-			return { profile: null, PeopleId: this.props.params.id, name: '', favoriteCity: '' };
-		},
-		componentDidMount: function componentDidMount() {
-			var _this = this;
-	
-			_jquery2.default.ajax({
-				url: '/api/people/' + this.props.params.id,
-				method: 'GET'
-			}).done(function (profile) {
-				console.log(profile);
-				_this.setState({ profile: profile, name: profile.name, favoriteCity: profile.favoriteCity });
-			});
-		},
-		modifyCity: function modifyCity() {
-			var _this2 = this;
-	
-			_jquery2.default.ajax({
-				url: '/api/people/' + this.props.params.id,
-				method: 'PUT'
-			}).done(function (profile) {
-				console.log('updated profile', profile);
-				_this2.setState({ profile: profile });
-				_reactRouter2.default.push('/people/' + _this2.props.params.id);
-			});
-		},
-	
-		deleteProfile: function deleteProfile() {
-			_jquery2.default.ajax({
-				url: '/api/people/' + this.props.params.id,
-				method: 'DELETE'
-			});
-			console.log('deleted');
-			_reactRouter2.default.push('/people');
-		},
-	
-		render: function render() {
-			return _react2.default.createElement(
-				'div',
-				null,
-				_react2.default.createElement(
-					'h3',
-					null,
-					'Profile Page'
-				),
-				_react2.default.createElement(
-					'h1',
-					null,
-					this.state.name
-				),
-				_react2.default.createElement(
-					'h1',
-					null,
-					this.state.favoriteCity
-				),
-				_react2.default.createElement(
-					'button',
-					{ onClick: this.modifyCity },
-					'Brooklynify'
-				),
-				_react2.default.createElement(
-					'button',
-					{ onClick: this.deleteProfile },
-					'Delete'
-				)
-			);
-		}
-	});
-	
-	exports.default = Profile;
 
 /***/ }
 /******/ ]);
