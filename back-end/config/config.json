@@ -1,23 +1,15 @@
 {
   "development": {
-    "username": "salina",
-    "password": null,
     "database": "spotify",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
-    "username": "salina",
-    "password": null,
     "database": "spotify",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "production": {
-    "username": "salina",
-    "password": null,
-    "database": "spotify",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
+    "use_env_variable": "https://salina-fu-spotify-herokuapp.com"
   }
 }
